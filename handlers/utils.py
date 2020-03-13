@@ -17,8 +17,8 @@ def convert_bytes(num):
 def auth(user=None):
     if not user:
         return False
-    credentials = zip([user['id'], user['username'], user['first_name'], user['last_name']],
-                      [auth_cfg['id'], auth_cfg['username'], auth_cfg['first_name'], auth_cfg['last_name']])
+    credentials = zip([user['id'], user['username']],
+                      [auth_cfg['id'], auth_cfg['username']])
     pairs_check = [True if pair[0] == pair[1] else None for pair in credentials]
     if all(pairs_check):
         return True
