@@ -1,6 +1,8 @@
 from typing import Dict, List, Optional
 import transmissionrpc
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
+import requests
+from yggtorrentscraper import YggTorrentScraper
 
 from .utils import convert_bytes
 from config import torrents_cfg, favourites
@@ -15,7 +17,7 @@ class Command:
     def __init__(self):
         self.torrent_commands = {
             'keyboard': [
-                ['torrents list 📋', 'start torrent 🚀', 'stop torrent 🚫'],
+                ['torrents list 📋', 'start torrent 🚀', 'stop torrent 🚫', 'ygg'],
             ],
             'one_time_keyboard': True,
             'resize_keyboard': True
@@ -88,7 +90,15 @@ class Command:
 
     async def process_wait(self) -> ReplyMsg:
         return {'msg': "I'm waiting for a command...", 'reply_markup': self.torrent_commands}
-
+    
+    async def process_yggtorrent(self) -> ReplyMsg:
+        mostcompleted = self.get_yggtorrent_most_completed()
+        return {'msg': "YggTorrent Most Completed", 'reply_markup': mostcompleted}
+    
+    def get_yggtorrent_most_completed():
+        scraper = YggTorrentScraper(requests.session())
+        return scraper.most_completed()
+            
     def get_torrents_for_select(self, action='stop') -> KeyboardMarkup:
         """
         Returns keyboard markup with torrents
