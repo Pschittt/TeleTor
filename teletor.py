@@ -22,7 +22,7 @@ class TorrentBot(telepot.aio.helper.ChatHandler):
 
         self.torrent_commands = {
             'keyboard': [
-                ['torrents list 📋', 'start torrent 🚀', 'stop torrent 🚫'],
+                ['torrents list 📋', 'start torrent 🚀', 'stop torrent 🚫', 'ygg'],
             ],
             'one_time_keyboard': True,
             'resize_keyboard': True
@@ -68,6 +68,7 @@ class TorrentBot(telepot.aio.helper.ChatHandler):
             (lambda m: m['text'] == '/start_torrent', self.command.process_start_torrent),
             (lambda m: m['text'] == '/stop_torrent', self.command.process_stop_torrent),
             (lambda m: m['text'] == '/delete_torrent', self.command.process_delete_torrent),
+            (lambda m: m['text'] == '/ygg', self.command.process_yggtorrent),
             (lambda m: True, self.command.process_wait)
         ]
         for when, processor in switch:
